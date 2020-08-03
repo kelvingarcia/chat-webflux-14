@@ -40,7 +40,7 @@ class ChatRouter{
 	@Bean
 	RouterFunction<ServerResponse> routes(ChatService chatService){
 		return route()
-			.GET("/mensagens-stream/{name}", req -> ok().contentType(MediaType.TEXT_EVENT_STREAM).body(
+			.GET("/mensagens-stream/{name}", req -> ok().contentType(MediaType.APPLICATION_STREAM_JSON).body(
 					chatService.mensagemStream(req.pathVariable("name")),
 					Mensagem.class
 			))
@@ -53,7 +53,7 @@ class ChatRouter{
 					Mensagem.class
 			))
 			.GET("/mensagens", req -> ok().body(chatService.getAllMensagens(), Mensagem.class))
-			.GET("/mensagens-live", req -> ok().contentType(MediaType.TEXT_EVENT_STREAM).body(
+			.GET("/mensagens-live", req -> ok().contentType(MediaType.APPLICATION_STREAM_JSON).body(
 					chatService.getMensagensSink(),
 					Mensagem.class
 			))
